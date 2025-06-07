@@ -1,0 +1,4 @@
+lean-practice
+========
+
+Hello, lean!
