@@ -36,3 +36,5 @@ Foundations:
 - [A mathlib overview](https://leanprover-community.github.io/mathlib-overview.html)
 - [Mathlib documentation](https://leanprover-community.github.io/mathlib4_docs/)
 - [Loogle](https://loogle.lean-lang.org/)
+- [Moogle](https://www.moogle.ai/)
+- [LeanSearch](https://leansearch.net/)
