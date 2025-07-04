@@ -1,5 +1,6 @@
 import Init.Data.Int.Gcd
 import Init.Data.Int.Order
+import Init.Data.Int.DivMod.Bootstrap
 import Mathlib.Data.Rat.Lemmas
 import Mathlib.Algebra.GCDMonoid.Nat
 
@@ -47,8 +48,13 @@ lemma odd_iff_abs_odd {a : ℤ} : a % 2 = 1 ↔ a.natAbs % 2 = 1 :=
   ⟨ltor, rtol⟩
 
 lemma odd_iff_coprime2 {a : ℕ} : a % 2 = 1 ↔ a.Coprime 2 :=
-  have ltor (h : a % 2 = 1) : a.Coprime 2 := by sorry
-  have rtol (h : a.Coprime 2) : a % 2 = 1 := by sorry
+  have ltor (h : a % 2 = 1) : a.Coprime 2 := by
+    rw [Nat.Coprime, Nat.gcd_comm, Nat.gcd_rec, h]
+    decide
+  have rtol (h : a.Coprime 2) : a % 2 = 1 := by
+    rw [Nat.Coprime, Nat.gcd_comm, Nat.gcd_rec] at h
+    have := Nat.mod_two_eq_zero_or_one a
+    aesop
   ⟨ltor, rtol⟩
 
 lemma rat_denom_le2_add {a b : ℚ} (ha : a.den ≤ 2) (hb : b.den ≤ 2) : (a + b).den ≤ 2 := by
@@ -93,7 +99,8 @@ lemma rat_denom_le2_add {a b : ℚ} (ha : a.den ≤ 2) (hb : b.den ≤ 2) : (a +
   have ha1 : (a.num * 2) % 4 = 2 := by sorry
   have hb1 : (b.num * 2) % 4 = 2 := by sorry
 
-  have h : (a.num * 2 + b.num * 2) % 4 = 0 := by sorry
+  have h : (a.num * 2 + b.num * 2) % 4 = 0 := by rw [Int.add_emod, ha1, hb1]; decide
+  have h : 4 ∣ (a.num * 2 + b.num * 2) := Int.dvd_of_emod_eq_zero h
   have h : (a.num * 2 + b.num * 2).gcd 4 = 4 := by sorry
   have h : c = 4 := h
   have h : (a + b).den = 1 := by simp_all [Rat.add_def, Rat.normalize, c]
