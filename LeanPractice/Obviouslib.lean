@@ -1,8 +1,5 @@
-import Init.Data.Int.Gcd
-import Init.Data.Int.Order
-import Init.Data.Int.DivMod.Bootstrap
 import Mathlib.Data.Rat.Lemmas
-import Mathlib.Algebra.GCDMonoid.Nat
+import Mathlib.Tactic.Ring
 
 --
 -- Series of obvious lemmas
@@ -57,6 +54,22 @@ lemma odd_iff_coprime2 {a : ℕ} : a % 2 = 1 ↔ a.Coprime 2 :=
     aesop
   ⟨ltor, rtol⟩
 
+lemma odd_mul2_mod4_eq2 {a : ℤ} (h : a % 2 = 1) : (a * 2) % 4 = 2 := by
+  rw [Int.emod_eq_iff (by decide)] at h
+  have ⟨_, _, h⟩ := h
+  have h : 2 ∣ (a - 1) := by simp_all [← @Int.dvd_neg 2 (a - 1)]
+  rcases h with ⟨k, h⟩
+  have h : a - 1 = k * 2 := by simp_all [Int.mul_comm]
+  rw [Eq.comm, eq_sub_iff_add_eq, Eq.comm] at h
+  have h : a * 2 = k * 4 + 2 := by rw [h]; ring
+  aesop
+
+lemma denom2rat_fact {a : ℚ} (h : a.den = 2) : (a.num * 2) % 4 = 2 := by
+  have h := a.reduced
+  have h : ¬(2 ∣ a.num.natAbs) := by simp_all [odd_iff_coprime2]; exact h
+  have h : a.num % 2 = 1 := by simp_all [odd_iff_abs_odd]
+  exact odd_mul2_mod4_eq2 h
+
 lemma rat_denom_le2_add {a b : ℚ} (ha : a.den ≤ 2) (hb : b.den ≤ 2) : (a + b).den ≤ 2 := by
   have ha : a.den = 1 ∨ a.den = 2 := nz_le2_is_0or1 a.den_nz ha
   have hb : b.den = 1 ∨ b.den = 2 := nz_le2_is_0or1 b.den_nz hb
@@ -69,39 +82,30 @@ lemma rat_denom_le2_add {a b : ℚ} (ha : a.den ≤ 2) (hb : b.den ≤ 2) : (a +
   decide
 
   -- case (1, 2)
-  let c := (a.num * 2 + b.num).natAbs.gcd 2
   have h := b.reduced
   have h : (a.num * 2 + b.num).gcd 2 = 1 := by aesop
-  have h : c = 1 := h
-  have h : (a + b).den = 2 := by simp_all [Rat.add_def, Rat.normalize, c]
+  have h : (a.num * 2 + b.num).natAbs.gcd 2 = 1 := h
+  have h : (a + b).den = 2 := by simp_all [Rat.add_def, Rat.normalize]
   simp_all
 
   -- case (2, 1)
-  let c := (a.num + b.num * 2).natAbs.gcd 2
   have h := a.reduced
   have h : (a.num + b.num * 2).gcd 2 = 1 := by aesop
-  have h : c = 1 := h
-  have h : (a + b).den = 2 := by simp_all [Rat.add_def, Rat.normalize, c]
+  have h : (a.num + b.num * 2).natAbs.gcd 2 = 1 := h
+  have h : (a + b).den = 2 := by simp_all [Rat.add_def, Rat.normalize]
   simp_all
 
   -- case (2, 2)
-  let c := (a.num * 2 + b.num * 2).natAbs.gcd 4
-
-  have ha1 := a.reduced
-  have hb1 := b.reduced
-
-  have ha1 : ¬(2 ∣ a.num.natAbs) := by simp_all [odd_iff_coprime2]; exact ha1
-  have hb1 : ¬(2 ∣ b.num.natAbs) := by simp_all [odd_iff_coprime2]; exact hb1
-
-  have ha1 : a.num % 2 = 1 := by simp_all [Int.natAbs_cast, odd_iff_abs_odd]
-  have hb1 : b.num % 2 = 1 := by simp_all [Int.natAbs_cast, odd_iff_abs_odd]
-
-  have ha1 : (a.num * 2) % 4 = 2 := by sorry
-  have hb1 : (b.num * 2) % 4 = 2 := by sorry
-
-  have h : (a.num * 2 + b.num * 2) % 4 = 0 := by rw [Int.add_emod, ha1, hb1]; decide
+  have h : (a.num * 2 + b.num * 2) % 4 = 0 := by
+    rw [Int.add_emod, denom2rat_fact ha, denom2rat_fact hb]
+    decide
   have h : 4 ∣ (a.num * 2 + b.num * 2) := Int.dvd_of_emod_eq_zero h
-  have h : (a.num * 2 + b.num * 2).gcd 4 = 4 := by sorry
-  have h : c = 4 := h
-  have h : (a + b).den = 1 := by simp_all [Rat.add_def, Rat.normalize, c]
+  have h : ↑((a.num * 2 + b.num * 2).gcd 4) = (4 : ℤ) := by
+    have hx := @Int.gcd_eq_right_iff_dvd 4 (a.num * 2 + b.num * 2) (by decide)
+    simp_all [hx]
+  have h : (a.num * 2 + b.num * 2).gcd 4 = 4 := by
+    rw [← (@Nat.cast_inj ℤ)]
+    exact h
+  have h : (a.num * 2 + b.num * 2).natAbs.gcd 4 = 4 := h
+  have h : (a + b).den = 1 := by simp_all [Rat.add_def, Rat.normalize]
   simp_all
