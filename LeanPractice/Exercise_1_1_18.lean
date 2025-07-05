@@ -1,4 +1,5 @@
 import LeanPractice.Obviouslib
+import Mathlib.Tactic.Linarith
 
 /-
 # Exercise 1.1.18. Which of these are groups?
@@ -42,3 +43,19 @@ instance : AddCommGroup RatDenomLE2 where
   zsmul := zsmulRec
   neg_add_cancel a := by apply Subtype.eq; exact Rat.neg_add_cancel a.val
   add_comm a b := by apply Subtype.eq; exact Rat.add_comm a.val b.val
+
+/-
+(c) The set of rational numbers with denominator at most 2, where the operation is multiplication.
+-/
+theorem rat_denom_le2_no_mul_group
+  (grp : Group RatDenomLE2)
+  (h : ∀ {a b : RatDenomLE2}, (grp.mul a b).val = a.val * b.val)
+: False
+:= by
+  have h0 := rat_denom_le2_mul
+  push_neg at h0
+  obtain ⟨va, vb, ha, hb, hab_not⟩ := h0
+  let ab := grp.mul ⟨va, ha⟩ ⟨vb, hb⟩
+  let hab := ab.property
+  have h: ab.val.den = (va * vb).den := by rw [h]
+  linarith
