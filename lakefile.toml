@@ -1,13 +1,9 @@
 name = "lean-practice"
 version = "0.1.0"
-defaultTargets = ["lean-practice"]
+defaultTargets = ["LeanPractice"]
 
 [[lean_lib]]
 name = "LeanPractice"
-
-[[lean_exe]]
-name = "lean-practice"
-root = "Main"
 
 [[require]]
 name = "mathlib"
