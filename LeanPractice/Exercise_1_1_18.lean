@@ -59,3 +59,14 @@ theorem rat_denom_le2_no_mul_group
   let hab := ab.property
   have h: ab.val.den = (va * vb).den := by rw [h]
   linarith
+
+/-
+(d) The set of nonnegative integers, where the operation is addition.
+-/
+theorem nat_no_add_group
+  (grp : AddGroup ℕ)
+  (h : ∀ {a : ℕ}, a ≠ 0 → a + (-a) = 0)
+: False
+:= by
+  specialize h (a := 1)
+  aesop
