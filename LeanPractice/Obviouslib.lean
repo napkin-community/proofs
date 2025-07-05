@@ -70,7 +70,7 @@ lemma denom2rat_fact {a : ℚ} (h : a.den = 2) : (a.num * 2) % 4 = 2 := by
   have h : a.num % 2 = 1 := by simp_all [odd_iff_abs_odd]
   exact odd_mul2_mod4_eq2 h
 
-lemma rat_denom_le2_add {a b : ℚ} (ha : a.den ≤ 2) (hb : b.den ≤ 2) : (a + b).den ≤ 2 := by
+theorem rat_denom_le2_add {a b : ℚ} (ha : a.den ≤ 2) (hb : b.den ≤ 2) : (a + b).den ≤ 2 := by
   have ha : a.den = 1 ∨ a.den = 2 := nz_le2_is_0or1 a.den_nz ha
   have hb : b.den = 1 ∨ b.den = 2 := nz_le2_is_0or1 b.den_nz hb
 
@@ -109,3 +109,11 @@ lemma rat_denom_le2_add {a b : ℚ} (ha : a.den ≤ 2) (hb : b.den ≤ 2) : (a +
   have h : (a.num * 2 + b.num * 2).natAbs.gcd 4 = 4 := h
   have h : (a + b).den = 1 := by simp_all [Rat.add_def, Rat.normalize]
   simp_all
+
+theorem rat_denom_le2_mul : ¬(∀ {a b : ℚ}, a.den ≤ 2 → b.den ≤ 2 → (a * b).den ≤ 2) := by
+  intro h
+  have ha : (mkRat 1 2 : ℚ).den ≤ 2 := by rfl
+  have hb : (mkRat 1 2 : ℚ).den ≤ 2 := by rfl
+  have h := h ha hb
+  have h0 : (mkRat 1 4).den = 4 := by aesop
+  aesop
