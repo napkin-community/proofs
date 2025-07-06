@@ -8,7 +8,7 @@ lake build
 
 # Type-check specific files in CLI
 lake env lean LeanPractice/Obviouslib.lean
-lake env lean LeanPractice/Exercise_1_1_18.lean
+lake env lean LeanPractice/Chapter1.lean
 ```
 
 ### Learning materials
