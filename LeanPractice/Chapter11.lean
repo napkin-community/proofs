@@ -1,7 +1,4 @@
-import Mathlib.Tactic.Linarith
 import Mathlib.LinearAlgebra.Trace
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import LeanPractice.Obviouslib
 
 /-
 # Problem 11B† (Product of traces)
