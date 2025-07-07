@@ -1,5 +1,69 @@
-import LeanPractice.Obviouslib
+import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.Linarith
+
+import LeanPractice.Obviouslib
+
+/-
+# Example 1.1.1 (Additive integers)
+
+The pair (ℤ, +) is a group: ℤ = {. . . , −2, −1, 0, 1, 2, . . . } is the set and
+the associative operation is addition. Note that
+• The element 0 ∈ ℤ is an identity: a + 0 = 0 + a = a for any a.
+• Every element a ∈ ℤ has an additive inverse: a + (−a) = (−a) + a = 0.
+We call this group ℤ.
+-/
+instance : AddCommGroup ℤ := Int.instAddCommGroup
+
+/-
+# Example 1.1.2 (Nonzero rationals)
+Let ℚ^× be the set of *nonzero rational numbers*. The pair (ℚ^×, ·) is a group: the set
+is ℚ^× and the associative operation is *multiplication*.
+Again we see the same two nice properties.
+• The element 1 ∈ ℚ^× is an identity: for any rational number, a · 1 = 1 · a = a.
+• For any rational number x ∈ ℚ^×, we have an inverse x^−1, such that
+
+    x · x^−1 = x^−1 · x = 1.
+-/
+def RatNonZero := { q : ℚ // q.num ≠ 0 }
+instance : CommGroup RatNonZero where
+  mul a b := ⟨a.val * b.val, by have := a.property; have := b.property; aesop⟩
+  one := ⟨1, by decide⟩
+  inv a := ⟨a.val⁻¹, by simp [Rat.inv_def', a.property]⟩
+  mul_assoc a b c := by apply Subtype.eq; exact Rat.mul_assoc a.val b.val c.val
+  one_mul a := by apply Subtype.eq; exact Rat.one_mul a.val
+  mul_one a := by apply Subtype.eq; exact Rat.mul_one a.val
+  mul_comm a b := by apply Subtype.eq; exact Rat.mul_comm a.val b.val
+  inv_mul_cancel a := by apply Subtype.eq; exact Rat.inv_mul_cancel a.val (by have := a.property; aesop)
+
+/-
+# Example 1.1.6 (Non-Examples of groups)
+• The pair (ℚ, ·) is NOT a group. (Here ℚ is rational numbers.) While there is
+  an identity element, the element 0 ∈ ℚ does not have an inverse.
+-/
+example : ¬(∀ {a : ℚ}, a * a⁻¹ = 1) := by
+  push_neg
+  use 0
+  linarith
+
+/-
+• The pair (Z, ·) is also NOT a group. (Why?)
+-/
+example (grp : Group ℤ) : ¬(∀ {a : ℤ}, a * a⁻¹ = 1) := by
+  push_neg
+  use 0
+  linarith
+
+/-
+• Let Mat_2×2(ℝ) be the set of 2 × 2 real matrices. Then (Mat_2×2(ℝ), ·)
+  (where · is matrix multiplication) is NOT a group.
+-/
+example : ¬(∀ {a : (Matrix (Fin 2) (Fin 2) ℝ)}, a * a⁻¹ = 1) := by
+  intro h
+  let zero : (Matrix (Fin 2) (Fin 2) ℝ) := 0
+  specialize h (a := zero)
+  have : zero⁻¹ = zero := by simp [zero]
+  aesop
 
 /-
 # Exercise 1.1.18. Which of these are groups?
