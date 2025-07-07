@@ -93,6 +93,36 @@ Let p be a prime. Consider the *nonzero residues modulo* p, which we denote by
 instance (p : ℕ) [Fact p.Prime] : CommGroup (ZMod p)ˣ := by infer_instance
 
 /-
+# Question 1.1.10. Why do we need the fact that p is prime?
+-/
+example : ¬(∀ {n : ℕ} [NeZero n], Fintype.card (ZMod n)ˣ = n - 1) := by
+  intro h
+  specialize h (n := 4)
+  have : Fintype.card (ZMod 4)ˣ = 2 := by decide
+  tauto
+
+/-
+# Example 1.1.11 (General linear group)
+Let n be a positive integer. Then GL_n(ℝ) is defined as the set of n×n real matrices
+which have nonzero determinant. It turns out that with this condition, every matrix
+does indeed have an inverse, so (GL_n(ℝ), ×) is a group, called the general linear
+group.
+-/
+instance (n : ℕ) [NeZero n] : Group (Matrix.GeneralLinearGroup (Fin n) ℝ) := by
+  infer_instance
+
+/-
+# Example 1.1.12 (Special linear group)
+Following the example above, let SL_n(ℝ) denote the set of n × n matrices whose
+determinant is actually 1. Again, for linear algebra reasons it turns out that
+(SL_n(ℝ), ×) is also a group, called the special linear group.
+-/
+instance (n : ℕ) [NeZero n] : Group (Matrix.SpecialLinearGroup (Fin n) ℝ) := by
+  infer_instance
+
+-- TODO
+
+/-
 # Exercise 1.1.18. Which of these are groups?
 
 (a) Rational numbers with odd denominators (in simplest form), where the
