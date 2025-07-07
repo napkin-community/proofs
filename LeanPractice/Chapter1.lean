@@ -1,6 +1,5 @@
+import Mathlib.Analysis.Complex.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.Linarith
 
 import LeanPractice.Obviouslib
 
@@ -13,7 +12,7 @@ the associative operation is addition. Note that
 • Every element a ∈ ℤ has an additive inverse: a + (−a) = (−a) + a = 0.
 We call this group ℤ.
 -/
-instance : AddCommGroup ℤ := Int.instAddCommGroup
+instance : AddCommGroup ℤ := by infer_instance
 
 /-
 # Example 1.1.2 (Nonzero rationals)
@@ -25,16 +24,12 @@ Again we see the same two nice properties.
 
     x · x^−1 = x^−1 · x = 1.
 -/
-def RatNonZero := { q : ℚ // q.num ≠ 0 }
-instance : CommGroup RatNonZero where
-  mul a b := ⟨a.val * b.val, by have := a.property; have := b.property; aesop⟩
-  one := ⟨1, by decide⟩
-  inv a := ⟨a.val⁻¹, by simp [Rat.inv_def', a.property]⟩
-  mul_assoc a b c := by apply Subtype.eq; exact Rat.mul_assoc a.val b.val c.val
-  one_mul a := by apply Subtype.eq; exact Rat.one_mul a.val
-  mul_one a := by apply Subtype.eq; exact Rat.mul_one a.val
-  mul_comm a b := by apply Subtype.eq; exact Rat.mul_comm a.val b.val
-  inv_mul_cancel a := by apply Subtype.eq; exact Rat.inv_mul_cancel a.val (by have := a.property; aesop)
+instance : CommGroup ℚˣ := by infer_instance
+example : ℚˣ ≃ { q : ℚ // q ≠ 0 } where
+  toFun u := ⟨u.val, u.ne_zero⟩
+  invFun s := Units.mk0 s.val s.property
+  left_inv u := by aesop
+  right_inv s := by aesop
 
 /-
 # Example 1.1.6 (Non-Examples of groups)
