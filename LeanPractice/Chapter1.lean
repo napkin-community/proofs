@@ -1,5 +1,5 @@
-import Mathlib.Analysis.Complex.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.Data.Complex.Norm
 
 import LeanPractice.Obviouslib
 
@@ -59,6 +59,51 @@ example : ¬(∀ {a : (Matrix (Fin 2) (Fin 2) ℝ)}, a * a⁻¹ = 1) := by
   specialize h (a := zero)
   have : zero⁻¹ = zero := by simp [zero]
   aesop
+
+/-
+# Example 1.1.7 (Complex unit circle)
+Let S^1 denote the set of complex numbers z with absolute value one; that is
+
+    S^1 := {z ∈ ℂ | |z| = 1}
+
+Then (S^1, ×) is a group
+-/
+def S1 := { z : ℂ // ‖z‖ = 1 }
+instance : Mul S1 where
+  mul a b := ⟨a.val * b.val, by simp [a.property, b.property]⟩
+instance : CommMagma S1 where
+  mul_comm a b := by apply Subtype.eq; exact Complex.commRing.mul_comm a.val b.val
+noncomputable instance : Inv S1 where
+  inv a := ⟨a.val⁻¹, by have := Complex.norm_def; have := a.property; aesop⟩
+noncomputable instance : CommGroup S1 where
+  one := ⟨1, by simp [Complex.norm_def]⟩
+  mul_assoc a b c := by apply Subtype.eq; exact Complex.commRing.mul_assoc a.val b.val c.val
+  one_mul a := by apply Subtype.eq; exact Complex.commRing.one_mul a.val
+  mul_one a := by apply Subtype.eq; exact Complex.commRing.mul_one a.val
+  inv_mul_cancel a := by
+    apply Subtype.eq
+    rw [mul_comm]
+    have h: a.val ≠ 0 := by
+      intro h0
+      rw [← Complex.normSq_eq_zero, ← Complex.norm_mul_self_eq_normSq] at h0
+      simp_all [a.property]
+    exact Complex.mul_inv_cancel h
+
+/-
+# Example 1.1.8 (Addition mod n)
+Here is an example from number theory: Let n > 1 be an integer, and consider the
+residues (remainders) modulo n. These form a group under addition. We call this
+the **cyclic group of order n**, and denote it as Z/nZ, with elements 0, 1, . . . . The
+identity is 0.
+-/
+instance (n : ℕ) : AddCommGroup (ZMod n) := by infer_instance
+
+/-
+# Example 1.1.9 (Multiplication mod p)
+Let p be a prime. Consider the *nonzero residues modulo* p, which we denote by
+(Z/pZ)^×. Then ((Z/pZ)^×, ×) is a group.
+-/
+instance (p : ℕ) [Fact p.Prime] : CommGroup (ZMod p)ˣ := by infer_instance
 
 /-
 # Exercise 1.1.18. Which of these are groups?
