@@ -7,7 +7,7 @@ import Mathlib.Tactic.Linarith
 (a) Rational numbers with odd denominators (in simplest form), where the
 operation is addition. (This includes integers, written as n/1, and 0 = 0/1).
 -/
-def RatOddDenom : Type := { q : ℚ // ¬(2 ∣ q.den) }
+def RatOddDenom := { q : ℚ // ¬(2 ∣ q.den) }
 
 instance : Add RatOddDenom where
   add a b := ⟨a.val + b.val, by exact rat_odd_denom_add a.property b.property⟩
@@ -27,7 +27,7 @@ instance : AddCommGroup RatOddDenom where
 /-
 (b) The set of rational numbers with denominator at most 2, where the operation is addition.
 -/
-def RatDenomLE2 : Type := { q : ℚ // q.den ≤ 2 }
+def RatDenomLE2 := { q : ℚ // q.den ≤ 2 }
 
 instance : Add RatDenomLE2 where
   add a b := ⟨a.val + b.val, by exact rat_denom_le2_add a.property b.property⟩
@@ -47,26 +47,21 @@ instance : AddCommGroup RatDenomLE2 where
 /-
 (c) The set of rational numbers with denominator at most 2, where the operation is multiplication.
 -/
-theorem rat_denom_le2_no_mul_group
-  (grp : Group RatDenomLE2)
-  (h : ∀ {a b : RatDenomLE2}, (grp.mul a b).val = a.val * b.val)
-: False
-:= by
+example (grp : Group RatDenomLE2) : ¬(∀ {a b : RatDenomLE2}, (a * b).val = a.val * b.val) := by
+  intro h
   have h0 := rat_denom_le2_mul
   push_neg at h0
-  obtain ⟨va, vb, ha, hb, hab_not⟩ := h0
-  let ab := grp.mul ⟨va, ha⟩ ⟨vb, hb⟩
-  let hab := ab.property
-  have h: ab.val.den = (va * vb).den := by rw [h]
+  obtain ⟨a, b, ha, hb, hab_not⟩ := h0
+  let a : RatDenomLE2 := ⟨a, ha⟩
+  let b : RatDenomLE2 := ⟨b, hb⟩
+  have := (a * b).property
+  have : (a * b).val.den = (a.val * b.val).den := by rw [h]
   linarith
 
 /-
 (d) The set of nonnegative integers, where the operation is addition.
 -/
-theorem nat_no_add_group
-  (grp : AddGroup ℕ)
-  (h : ∀ {a : ℕ}, a ≠ 0 → a + (-a) = 0)
-: False
-:= by
+example (grp : AddGroup ℕ) : ¬(∀ {a : ℕ}, a + (-a) = 0) := by
+  intro h
   specialize h (a := 1)
-  aesop
+  linarith
