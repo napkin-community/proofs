@@ -1,5 +1,6 @@
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Data.Complex.Norm
+import Mathlib.Analysis.Complex.Circle
+import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 
 import LeanPractice.Obviouslib
 
@@ -26,10 +27,10 @@ Again we see the same two nice properties.
 -/
 instance : CommGroup ℚˣ := by infer_instance
 example : ℚˣ ≃ { q : ℚ // q ≠ 0 } where
-  toFun u := ⟨u.val, u.ne_zero⟩
-  invFun s := Units.mk0 s.val s.property
-  left_inv u := by aesop
-  right_inv s := by aesop
+  toFun q := ⟨q.val, q.ne_zero⟩
+  invFun q := Units.mk0 q.val q.property
+  left_inv q := by aesop
+  right_inv q := by aesop
 
 /-
 # Example 1.1.6 (Non-Examples of groups)
@@ -68,26 +69,12 @@ Let S^1 denote the set of complex numbers z with absolute value one; that is
 
 Then (S^1, ×) is a group
 -/
-def S1 := { z : ℂ // ‖z‖ = 1 }
-instance : Mul S1 where
-  mul a b := ⟨a.val * b.val, by simp [a.property, b.property]⟩
-instance : CommMagma S1 where
-  mul_comm a b := by apply Subtype.eq; exact Complex.commRing.mul_comm a.val b.val
-noncomputable instance : Inv S1 where
-  inv a := ⟨a.val⁻¹, by have := Complex.norm_def; have := a.property; aesop⟩
-noncomputable instance : CommGroup S1 where
-  one := ⟨1, by simp [Complex.norm_def]⟩
-  mul_assoc a b c := by apply Subtype.eq; exact Complex.commRing.mul_assoc a.val b.val c.val
-  one_mul a := by apply Subtype.eq; exact Complex.commRing.one_mul a.val
-  mul_one a := by apply Subtype.eq; exact Complex.commRing.mul_one a.val
-  inv_mul_cancel a := by
-    apply Subtype.eq
-    rw [mul_comm]
-    have h: a.val ≠ 0 := by
-      intro h0
-      rw [← Complex.normSq_eq_zero, ← Complex.norm_mul_self_eq_normSq] at h0
-      simp_all [a.property]
-    exact Complex.mul_inv_cancel h
+noncomputable instance : CommGroup Circle := by infer_instance
+noncomputable example : Circle ≃ { z : ℂ // ‖z‖ = 1 } where
+  toFun z := ⟨z, by aesop⟩
+  invFun z := ⟨z.val, by aesop⟩
+  left_inv z := by aesop
+  right_inv z := by aesop
 
 /-
 # Example 1.1.8 (Addition mod n)
