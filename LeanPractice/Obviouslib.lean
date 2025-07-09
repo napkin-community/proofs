@@ -26,37 +26,34 @@ theorem rat_odd_denom_add {a b : ℚ} (ha : ¬(2 ∣ a.den)) (hb : ¬(2 ∣ b.de
 private lemma nz_le2_is_0or1 {a : ℕ} (hnz : a ≠ 0) (hle : a ≤ 2) : a = 1 ∨ a = 2 :=
   match a with | 1 | 2 => by decide
 
-private lemma even_iff_abs_even {a : ℤ} : a % 2 = 0 ↔ a.natAbs % 2 = 0 :=
-  have ltor (h : a % 2 = 0) : a.natAbs % 2 = 0 := by
+private lemma even_iff_abs_even {a : ℤ} : a % 2 = 0 ↔ a.natAbs % 2 = 0 where
+  mp h := by
     rw [← Int.dvd_iff_emod_eq_zero, ← Int.dvd_natAbs, Int.dvd_natCast, Nat.dvd_iff_mod_eq_zero] at h
     exact h
-  have rtol (h : a.natAbs % 2 = 0) : a % 2 = 0 := by
+  mpr h := by
     rw [← Int.dvd_iff_emod_eq_zero, ← Int.dvd_natAbs, Int.dvd_natCast, Nat.dvd_iff_mod_eq_zero]
     exact h
-  ⟨ltor, rtol⟩
 
-private lemma odd_iff_abs_odd {a : ℤ} : a % 2 = 1 ↔ a.natAbs % 2 = 1 :=
-  have ltor (h : a % 2 = 1) : a.natAbs % 2 = 1 := by
+private lemma odd_iff_abs_odd {a : ℤ} : a % 2 = 1 ↔ a.natAbs % 2 = 1 where
+  mp h := by
     contrapose! h
     simp_all
     rw [even_iff_abs_even]
     exact h
-  have rtol (h : a.natAbs % 2 = 1) : a % 2 = 1 := by
+  mpr h := by
     contrapose! h
     simp_all
     rw [← even_iff_abs_even]
     exact h
-  ⟨ltor, rtol⟩
 
-private lemma odd_iff_coprime2 {a : ℕ} : a % 2 = 1 ↔ a.Coprime 2 :=
-  have ltor (h : a % 2 = 1) : a.Coprime 2 := by
+private lemma odd_iff_coprime2 {a : ℕ} : a % 2 = 1 ↔ a.Coprime 2 where
+  mp h := by
     rw [Nat.Coprime, Nat.gcd_comm, Nat.gcd_rec, h]
     decide
-  have rtol (h : a.Coprime 2) : a % 2 = 1 := by
+  mpr h := by
     rw [Nat.Coprime, Nat.gcd_comm, Nat.gcd_rec] at h
     have := Nat.mod_two_eq_zero_or_one a
     aesop
-  ⟨ltor, rtol⟩
 
 private lemma odd_mul2_mod4_eq2 {a : ℤ} (h : a % 2 = 1) : (a * 2) % 4 = 2 := by
   rw [Int.emod_eq_iff (by decide)] at h
