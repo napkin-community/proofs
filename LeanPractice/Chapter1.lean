@@ -1,3 +1,4 @@
+import Mathlib.Algebra.Group.Equiv.Defs
 import Mathlib.Analysis.Complex.Circle
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
@@ -26,11 +27,14 @@ Again we see the same two nice properties.
     x · x^−1 = x^−1 · x = 1.
 -/
 instance : CommGroup ℚˣ := by infer_instance
-example : ℚˣ ≃ { q : ℚ // q ≠ 0 } where
+-- It's equivalent with manually defined version
+instance : Mul { q : ℚ // q ≠ 0 } where mul a b := ⟨a.val * b.val, by aesop⟩
+example : ℚˣ ≃* { q : ℚ // q ≠ 0 } where
   toFun q := ⟨q.val, q.ne_zero⟩
   invFun q := Units.mk0 q.val q.property
   left_inv q := by aesop
   right_inv q := by aesop
+  map_mul' x y := by aesop
 
 /-
 # Example 1.1.6 (Non-Examples of groups)
@@ -68,11 +72,15 @@ Let S^1 denote the set of complex numbers z with absolute value one; that is
 Then (S^1, ×) is a group
 -/
 noncomputable instance : CommGroup Circle := by infer_instance
-noncomputable example : Circle ≃ { z : ℂ // ‖z‖ = 1 } where
+-- It's equivalent with manually defined version
+instance : Mul { z : ℂ // ‖z‖ = 1 } where
+  mul a b := ⟨a.val * b.val, by aesop⟩
+noncomputable example : Circle ≃* { z : ℂ // ‖z‖ = 1 } where
   toFun z := ⟨z, by aesop⟩
   invFun z := ⟨z.val, by aesop⟩
   left_inv z := by aesop
   right_inv z := by aesop
+  map_mul' x y := by aesop
 
 /-
 # Example 1.1.8 (Addition mod n)
@@ -255,3 +263,54 @@ what these words mean, consult Appendix E.)
 example {G : Type} [Group G] (g : G) : Function.Bijective (λx ↦ g * x) where
   left a b := by aesop
   right y := by use g⁻¹ * y; aesop
+
+/-
+# Example 1.3.2 (Examples of isomorphisms)
+Let G and H be groups. We have the following isomorphisms.
+(a) ℤ ≅ 10ℤ, as above.
+-/
+def Tenℤ := { n : ℤ // 10 ∣ n }
+instance : Add Tenℤ where
+  add a b := ⟨a.val + b.val, dvd_add a.property b.property⟩
+example : ℤ ≃+ Tenℤ where
+  toFun n := ⟨10 * n, dvd_mul_right 10 n⟩
+  invFun n10 := n10.val / 10
+  left_inv n := by simp
+  right_inv n10 := by obtain ⟨_, _, _⟩ := n10; aesop
+  map_add' x y := by have := mul_add 10 x y; aesop
+
+/-
+(b) There is an isomorphism
+
+    G × H ≅ H × G
+
+by the map (g, h) ↦ (h, g).
+-/
+example
+  {A B : Type} [Group A] [Group B] [Group (A × B)] [Group (B × A)]
+: A × B ≃* B × A where
+  toFun ab := (ab.2, ab.1)
+  invFun ba := (ba.2, ba.1)
+  left_inv ab := by simp
+  right_inv ba := by simp
+  map_mul' x y := by simp
+
+/-
+(c) The identity map id: G → G is an isomorphism, hence G ∼= G.
+-/
+example {G : Type} [Group G] : G ≃* G where
+  toFun := id
+  invFun := id
+  left_inv g := by repeat rw [id]
+  right_inv g := by repeat rw [id]
+  map_mul' x y := by repeat rw [id]
+
+/-
+(d) There is another isomorphism of Z to itself: send every x to −x.
+-/
+example : ℤ ≃+ ℤ where
+  toFun n := -n
+  invFun n := -n
+  left_inv n := by linarith
+  right_inv n := by linarith
+  map_add' x y := by linarith
