@@ -3,21 +3,22 @@ import Mathlib.Data.Nat.Notation
 import Mathlib.Data.Rat.Init
 import Mathlib.Algebra.Group.Nat.Even
 import Mathlib.Tactic.Lemma
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
 --
 -- Series of unused lemmas
 --
-private lemma lt2_is_0or1 (a : ℕ) : a < 2 ↔ a = 0 ∨ a = 1 :=
+example {a : ℕ} : a < 2 ↔ a = 0 ∨ a = 1 :=
   have ltor (h : a < 2) : a = 0 ∨ a = 1 := match a with | 0 | 1 => by decide
   have rtol (h : a = 0 ∨ a = 1) : a < 2 := match a with | 0 | 1 => by decide
   ⟨ltor, rtol⟩
 
-private lemma nat_is_2dvd_or_not (a : ℕ) : (2 ∣ a) ∨ ¬(2 ∣ a) := by
+example {a : ℕ} : (2 ∣ a) ∨ ¬(2 ∣ a) := by
   cases (Nat.mod_two_eq_zero_or_one a) with
   | inl even => left; exact Nat.dvd_of_mod_eq_zero even
   | inr odd => aesop
 
-private lemma even_is_2dvd (a : ℕ) : (a % 2 = 0) ↔ 2 ∣ a :=
+example {a : ℕ} : (a % 2 = 0) ↔ 2 ∣ a :=
   have ltor : a % 2 = 0 → 2 ∣ a := by
     intro h
     apply Nat.dvd_of_mod_eq_zero
@@ -28,11 +29,11 @@ private lemma even_is_2dvd (a : ℕ) : (a % 2 = 0) ↔ 2 ∣ a :=
     exact h
   ⟨ltor, rtol⟩
 
-private lemma odd_is_not_2dvd (a : ℕ) : (a % 2 = 1) ↔ ¬(2 ∣ a) := by simp
+example {a : ℕ} : (a % 2 = 1) ↔ ¬(2 ∣ a) := by simp
 
-private lemma rat_eq_int
-  {a : ℚ}
-  {n : ℤ}
-  (h : a = n)
-: a.den = 1 ∧ a.num = n := by
+example {a : ℚ} {n : ℤ} (h : a = n) : a.den = 1 ∧ a.num = n := by
+  aesop
+
+example {x y : ℝ} : ‖!₂[x, y]‖ ^ 2 = ‖!₂[x, 0]‖ ^ 2 + ‖!₂[0, y]‖ ^ 2 := by
+  repeat rw [PiLp.norm_sq_eq_of_L2]
   aesop
