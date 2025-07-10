@@ -3,7 +3,7 @@ import Mathlib.Analysis.Complex.Circle
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
 
-import LeanPractice.Obviouslib
+import NapkinProofs.Obviouslib
 
 /-
 # Example 1.1.1 (Additive integers)

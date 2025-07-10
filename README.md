@@ -1,14 +1,14 @@
-lean-practice
+napkin-proofs
 ========
-Hello, lean!
+Lean4 formal proofs of "An Infinitely Large Napkin".
 
 ```bash
 # Build the project
 lake build
 
 # Type-check specific files in CLI
-lake env lean LeanPractice/Obviouslib.lean
-lake env lean LeanPractice/Chapter1.lean
+lake env lean NapkinProofs/Obviouslib.lean
+lake env lean NapkinProofs/Chapter1.lean
 ```
 
 ### Learning materials
