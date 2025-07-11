@@ -18,6 +18,7 @@ lake env lean NapkinProofs/Chapter1.lean
 
 - Brief
   - [A Tour of Lean](https://lean-lang.org/documentation/1900-1-1-a-tour-of-lean/)
+  - [Examples](https://lean-lang.org/examples/)
   - [Lean 4 tactic cheatsheet (pdf)](https://leanprover-community.github.io/papers/lean-tactics.pdf)
 - Game
   - [The Natural Number Game](https://adam.math.hhu.de/#/g/leanprover-community/NNG4)
