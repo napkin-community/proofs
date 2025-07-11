@@ -11,34 +11,47 @@ lake env lean NapkinProofs/Obviouslib.lean
 lake env lean NapkinProofs/Chapter1.lean
 ```
 
-### Learning materials
-- [A Tour of Lean](https://lean-lang.org/documentation/tour/)
-- [Functional Programming in Lean](https://lean-lang.org/functional_programming_in_lean/)
-- [Theorem Proving in Lean 4](https://lean-lang.org/theorem_proving_in_lean4/)
-- [Mathematics in Lean](https://leanprover-community.github.io/mathematics_in_lean/)
-  - [(pdf)](https://leanprover-community.github.io/mathematics_in_lean/mathematics_in_lean.pdf)
-- [The Mechanics of Proof](https://hrmacbeth.github.io/math2001/)
-- [Lean Game Server](https://adam.math.hhu.de/)
-- [A glimpse of Lean](https://github.com/PatrickMassot/GlimpseOfLean)
-- [Lean 4 tactic cheatsheet (pdf)](https://leanprover-community.github.io/papers/lean-tactics.pdf)
-- [The Hitchhiker's Guide to Logical Verification (pdf)](https://rawcdn.githack.com/lean-forward/logical_verification_2025/76421700cb010aeddeb2b2a4a93e538b92b0e585/hitchhikers_guide_2025_tablet.pdf)
-- [Examples](https://lean-lang.org/documentation/#:~:text=functions%20and%20types.-,Examples,-Palindromes)
-- [Metaprogramming in Lena 4](https://leanprover-community.github.io/lean4-metaprogramming-book/)
-  - [(pdf)](https://github.com/leanprover-community/lean4-metaprogramming-book/releases/download/latest/Metaprogramming.in.Lean.4.pdf)
+### Learn Lean
+<table>
+<tr><th>Learning materials</th><th>References</th></tr>
+<tr><td>
 
-Foundations:
+- Brief
+  - [A Tour of Lean](https://lean-lang.org/documentation/1900-1-1-a-tour-of-lean/)
+  - [Lean 4 tactic cheatsheet (pdf)](https://leanprover-community.github.io/papers/lean-tactics.pdf)
+- Game
+  - [The Natural Number Game](https://adam.math.hhu.de/#/g/leanprover-community/NNG4)
+  - [Lean Game Server](https://adam.math.hhu.de/)
+- Books
+  - [Functional Programming in Lean (FPIL)](https://lean-lang.org/functional_programming_in_lean/)
+  - [Theorem Proving in Lean (TPIL)](https://lean-lang.org/theorem_proving_in_lean4/)
+  - [Mathematics in Lean (MIL)](https://leanprover-community.github.io/mathematics_in_lean/), [PDF version](https://leanprover-community.github.io/mathematics_in_lean/mathematics_in_lean.pdf)
+- Further readings
+  - [The Hitchhiker's Guide to Logical Verification (pdf)](https://rawcdn.githack.com/lean-forward/logical_verification_2025/76421700cb010aeddeb2b2a4a93e538b92b0e585/hitchhikers_guide_2025_tablet.pdf)
+  - [Logic and Proof](https://leanprover-community.github.io/logic_and_proof/)
+  - [The Mechanics of Proof](https://hrmacbeth.github.io/math2001/)
+  - [Lean 4 VS Code extension manual](https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md)
+  - [Metaprogramming in Lean 4](https://leanprover-community.github.io/lean4-metaprogramming-book/), [PDF version](https://github.com/leanprover-community/lean4-metaprogramming-book/releases/download/latest/Metaprogramming.in.Lean.4.pdf)
+  - [Lean perfectoid spaces](https://leanprover-community.github.io/lean-perfectoid-spaces/type_theory.html)
+  - [Type Checking in Lean 4](https://ammkrn.github.io/type_checking_in_lean4/)
+  - [A glimpse of Lean](https://github.com/PatrickMassot/GlimpseOfLean)
 
-- [Lean perfectoid spaces](https://leanprover-community.github.io/lean-perfectoid-spaces/type_theory.html)
-- [Type Checking in Lean 4](https://ammkrn.github.io/type_checking_in_lean4/)
+</td><td>
 
-### Documentation
-- [Lean community](https://leanprover-community.github.io/)
-- [The Lean Language Reference](https://lean-lang.org/doc/reference/latest/)
-- [A mathlib overview](https://leanprover-community.github.io/mathlib-overview.html)
-- [Mathlib documentation](https://leanprover-community.github.io/mathlib4_docs/)
-- [Loogle](https://loogle.lean-lang.org/)
-- [Moogle](https://www.moogle.ai/)
-- [LeanSearch](https://leansearch.net/)
+- Docs
+  - [Lean community](https://leanprover-community.github.io/)
+  - [The Lean Language Reference](https://lean-lang.org/doc/reference/latest/)
+  - [A mathlib overview](https://leanprover-community.github.io/mathlib-overview.html)
+  - [Mathlib documentation](https://leanprover-community.github.io/mathlib4_docs/)
+- Search
+  - [Loogle](https://loogle.lean-lang.org/), [LeanExplore](https://www.leanexplore.com/), [Moogle](https://www.moogle.ai/), [LeanSearch](https://leansearch.net/)
+- LLM-based assist
+  - [LeanDojo](https://leandojo.org/)
+- other resources
+  - [REPL](https://github.com/leanprover-community/repl), [Pantograph](https://git.leni.sh/aniva/Pantograph), [Lean4Web](https://github.com/leanprover-community/lean4web)
+
+</td></tr>
+</table>
 
 &nbsp;
 
