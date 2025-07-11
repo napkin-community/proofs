@@ -21,7 +21,7 @@ lake env lean NapkinProofs/Chapter1.lean
 - [Lean Game Server](https://adam.math.hhu.de/)
 - [A glimpse of Lean](https://github.com/PatrickMassot/GlimpseOfLean)
 - [Lean 4 tactic cheatsheet (pdf)](https://leanprover-community.github.io/papers/lean-tactics.pdf)
-- [The Hitchhiker's Guide to Logical Verification (pdf)](https://rawcdn.githack.com/blanchette/logical_verification_2023/0b9ca22d/hitchhikers_guide_tablet.pdf)
+- [The Hitchhiker's Guide to Logical Verification (pdf)](https://rawcdn.githack.com/lean-forward/logical_verification_2025/76421700cb010aeddeb2b2a4a93e538b92b0e585/hitchhikers_guide_2025_tablet.pdf)
 - [Examples](https://lean-lang.org/documentation/#:~:text=functions%20and%20types.-,Examples,-Palindromes)
 - [Metaprogramming in Lena 4](https://leanprover-community.github.io/lean4-metaprogramming-book/)
   - [(pdf)](https://github.com/leanprover-community/lean4-metaprogramming-book/releases/download/latest/Metaprogramming.in.Lean.4.pdf)
