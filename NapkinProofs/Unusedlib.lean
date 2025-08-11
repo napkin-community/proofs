@@ -37,3 +37,21 @@ example {a : ℚ} {n : ℤ} (h : a = n) : a.den = 1 ∧ a.num = n := by
 example {x y : ℝ} : ‖!₂[x, y]‖ ^ 2 = ‖!₂[x, 0]‖ ^ 2 + ‖!₂[0, y]‖ ^ 2 := by
   repeat rw [PiLp.norm_sq_eq_of_L2]
   aesop
+
+--
+-- Prove termination of Ackermann function
+--
+def ackermann (m n : ℕ) : ℕ :=
+  match m, n with
+  | 0, n => n + 1
+  | m + 1, 0 => ackermann m 1
+  | m + 1, n + 1 => ackermann m (ackermann (m + 1) n)
+
+-- NOTE: Since for natural numbers 0 - 1 = 0, n - 1 < n is simply not true.
+-- Therefore, if you define ackermann function as below, Lean cannot
+-- automatically prove termination.
+partial def ackermann0 (m n : ℕ) : ℕ :=
+  match m, n with
+  | 0, n => n + 1
+  | m, 0 => ackermann0 (m - 1) 1
+  | m, n => ackermann0 (m - 1) (ackermann0 m (n - 1))
