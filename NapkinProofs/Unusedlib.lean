@@ -5,9 +5,9 @@ import Mathlib.Algebra.Group.Nat.Even
 import Mathlib.Tactic.Lemma
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
---
--- Series of unused lemmas
---
+/-
+# Series of unused lemmas
+-/
 example {a : ℕ} : a < 2 ↔ a = 0 ∨ a = 1 :=
   have ltor (h : a < 2) : a = 0 ∨ a = 1 := match a with | 0 | 1 => by decide
   have rtol (h : a = 0 ∨ a = 1) : a < 2 := match a with | 0 | 1 => by decide
@@ -38,9 +38,9 @@ example {x y : ℝ} : ‖!₂[x, y]‖ ^ 2 = ‖!₂[x, 0]‖ ^ 2 + ‖!₂[0, y
   repeat rw [PiLp.norm_sq_eq_of_L2]
   aesop
 
---
--- Prove termination of Ackermann function
---
+/-
+## Prove termination of Ackermann function
+-/
 def ackermann (m n : ℕ) : ℕ :=
   match m, n with
   | 0, n => n + 1
