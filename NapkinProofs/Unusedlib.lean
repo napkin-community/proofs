@@ -41,7 +41,7 @@ example {x y : ℝ} : ‖!₂[x, y]‖ ^ 2 = ‖!₂[x, 0]‖ ^ 2 + ‖!₂[0, y
 /-
 ## Prove termination of Ackermann function
 -/
-def ackermann (m n : ℕ) : ℕ :=
+private def ackermann (m n : ℕ) : ℕ :=
   match m, n with
   | 0, n => n + 1
   | m + 1, 0 => ackermann m 1
@@ -50,7 +50,7 @@ def ackermann (m n : ℕ) : ℕ :=
 -- NOTE: Since for natural numbers 0 - 1 = 0, n - 1 < n is simply not true.
 -- Therefore, if you define ackermann function as below, Lean cannot
 -- automatically prove termination.
-partial def ackermann0 (m n : ℕ) : ℕ :=
+private partial def ackermann0 (m n : ℕ) : ℕ :=
   match m, n with
   | 0, n => n + 1
   | m, 0 => ackermann0 (m - 1) 1
