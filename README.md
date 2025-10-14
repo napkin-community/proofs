@@ -48,9 +48,9 @@ lake env lean NapkinProofs/Chapter1.lean
   - [A mathlib overview](https://leanprover-community.github.io/mathlib-overview.html)
   - [Mathlib documentation](https://leanprover-community.github.io/mathlib4_docs/)
 - Search
-  - [Loogle](https://loogle.lean-lang.org/), [LeanExplore](https://www.leanexplore.com/), [Moogle](https://www.moogle.ai/), [LeanSearch](https://leansearch.net/)
+  - [Loogle](https://loogle.lean-lang.org/), [LeanExplore](https://www.leanexplore.com/), [Moogle](https://www.moogle.ai/), [LeanSearch](https://leansearch.net/), [Lean-Finder](https://huggingface.co/spaces/delta-lab-ai/Lean-Finder)
 - LLM-based assist
-  - [LeanDojo](https://leandojo.org/)
+  - [LeanDojo](https://leandojo.org/), [BFS-Prover-V2](https://bfs-prover.github.io/V2/)
 - other resources
   - [REPL](https://github.com/leanprover-community/repl), [Pantograph](https://git.leni.sh/aniva/Pantograph), [Lean4Web](https://github.com/leanprover-community/lean4web)
 
