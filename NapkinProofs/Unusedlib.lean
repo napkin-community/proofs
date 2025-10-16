@@ -5,6 +5,9 @@ import Mathlib.Algebra.Group.Nat.Even
 import Mathlib.Tactic.Lemma
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
+import NapkinProofs.Obviouslib
+
+
 /-
 # Series of unused lemmas
 -/
@@ -37,6 +40,7 @@ example {a : ℚ} {n : ℤ} (h : a = n) : a.den = 1 ∧ a.num = n := by
 example {x y : ℝ} : ‖!₂[x, y]‖ ^ 2 = ‖!₂[x, 0]‖ ^ 2 + ‖!₂[0, y]‖ ^ 2 := by
   repeat rw [PiLp.norm_sq_eq_of_L2]
   aesop
+
 
 /-
 ## Prove termination of Ackermann function
