@@ -201,3 +201,17 @@ theorem rat_denom_le2_mul : ¬(∀ {a b : ℚ}, a.den ≤ 2 → b.den ≤ 2 → 
   have h := h ha hb
   have h0 : (mkRat 1 4).den = 4 := by aesop
   aesop
+
+theorem nat_div_add_of_dvd
+  {a b c : Nat} (ha : c ∣ a) (hb : c ∣ b) (hc : 0 < c)
+: (a + b) / c = a / c + b / c := by
+  rw [Nat.add_div hc]
+  nth_rewrite 2 [← Nat.add_zero (a / c + b / c)]
+  rw [Nat.add_left_cancel_iff (n := a / c + b /c) (m := (if c ≤ a % c + b % c then 1 else 0)) (k := 0)]
+  rw [Nat.dvd_iff_mod_eq_zero] at ha
+  rw [Nat.dvd_iff_mod_eq_zero] at hb
+  rw [ha, hb]
+  simp
+  intro h
+  subst h
+  contradiction
