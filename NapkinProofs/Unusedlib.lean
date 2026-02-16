@@ -80,3 +80,33 @@ private lemma tri_succ (n : ℕ) : tri (n + 1) = tri n + n + 1 := by
     _ = (n * (n + 1) + 2 * (n + 1)) / 2   := by ring_nf
     _ = n * (n + 1) / 2 + 2 * (n + 1) / 2 := by rw [nat_div_add_of_dvd (Even.two_dvd (Nat.even_mul_succ_self n)) (Nat.dvd_mul_right 2 _) (by decide)]
     _ = tri n + (n + 1)                   := by rw [tri, Nat.mul_div_cancel_left _ (by decide)]
+
+
+/-
+## Proof that `1` is not accessible w.r.t. `<` on the closed interval [0, 1]
+-/
+-- Closed interval [0, 1]
+private abbrev I : Type := { x : ℝ // x ∈ Set.Icc (0 : ℝ) 1 }
+-- Relation `<` on the closed interval [0, 1]
+private def r (a b : I) : Prop := a.1 < b.1
+-- The point `1` in the closed interval [0, 1]
+private def oneI : I := ⟨1, by simp [Set.Icc]⟩
+-- Descending chain `n ↦ 1 / 2^n` (always in [0, 1])
+private noncomputable def chain (n : Nat) : I :=
+  ⟨(1 : ℝ) / (2 : ℝ) ^ n, by
+    refine ⟨by positivity, ?_⟩
+    refine (div_le_one (pow_pos (by norm_num : (0 : ℝ) < 2) n)).2 ?_
+    simpa using (one_le_pow₀ (by norm_num : (1 : ℝ) ≤ 2))⟩
+-- Proof
+private theorem one_not_accessible : ¬Acc r oneI := by
+  refine (not_acc_iff_exists_descending_chain (r := r) (x := oneI)).2 ?_
+  refine ⟨chain, ?_, ?_⟩
+  · exact Subtype.ext (by simp [chain, oneI])
+  ·
+    intro n
+    change (1 : ℝ) / (2 : ℝ) ^ (n + 1) < (1 : ℝ) / (2 : ℝ) ^ n
+    have hpos : 0 < (2 : ℝ) ^ n := by positivity
+    have hlt : (2 : ℝ) ^ n < (2 : ℝ) ^ (n + 1) := by
+      rw [pow_succ]
+      exact lt_mul_of_one_lt_right hpos (by norm_num : (1 : ℝ) < 2)
+    simpa using (one_div_lt_one_div_of_lt hpos hlt)
