@@ -77,7 +77,9 @@ instance : Mul { z : ℂ // ‖z‖ = 1 } where
   mul a b := ⟨a.val * b.val, by aesop⟩
 noncomputable example : Circle ≃* { z : ℂ // ‖z‖ = 1 } where
   toFun z := ⟨z, by aesop⟩
-  invFun z := ⟨z.val, by aesop⟩
+  invFun z := ⟨z.val, by
+    change z.val ∈ Submonoid.unitSphere ℂ
+    exact mem_sphere_zero_iff_norm.2 z.property⟩
   left_inv z := by aesop
   right_inv z := by aesop
   map_mul' x y := by aesop
