@@ -2,7 +2,7 @@ napkin-proofs
 ========
 Lean4 formal proofs of "An Infinitely Large Napkin".
 
-> [!NOTE]  
+> [!NOTE]
 > This project is still very incomplete.
 
 ```bash
