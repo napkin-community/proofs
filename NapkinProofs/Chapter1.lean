@@ -197,13 +197,13 @@ instance : Zero RatOddDenom where
 instance : Neg RatOddDenom where
   neg a := ⟨-a.val, by simp [a.property]⟩
 instance : AddCommGroup RatOddDenom where
-  add_assoc a b c := by apply Subtype.eq; exact Rat.add_assoc a.val b.val c.val
-  zero_add a := by apply Subtype.eq; exact Rat.zero_add a.val
-  add_zero a := by apply Subtype.eq; exact Rat.add_zero a.val
+  add_assoc a b c := by apply Subtype.ext; exact Rat.add_assoc a.val b.val c.val
+  zero_add a := by apply Subtype.ext; exact Rat.zero_add a.val
+  add_zero a := by apply Subtype.ext; exact Rat.add_zero a.val
   nsmul := nsmulRec
   zsmul := zsmulRec
-  neg_add_cancel a := by apply Subtype.eq; exact Rat.neg_add_cancel a.val
-  add_comm a b := by apply Subtype.eq; exact Rat.add_comm a.val b.val
+  neg_add_cancel a := by apply Subtype.ext; exact Rat.neg_add_cancel a.val
+  add_comm a b := by apply Subtype.ext; exact Rat.add_comm a.val b.val
 
 /-
 (b) The set of rational numbers with denominator at most 2, where the operation is addition.
@@ -217,13 +217,13 @@ instance : Zero RatDenomLE2 where
 instance : Neg RatDenomLE2 where
   neg a := ⟨-a.val, by simp [a.property]⟩
 instance : AddCommGroup RatDenomLE2 where
-  add_assoc a b c := by apply Subtype.eq; exact Rat.add_assoc a.val b.val c.val
-  zero_add a := by apply Subtype.eq; exact Rat.zero_add a.val
-  add_zero a := by apply Subtype.eq; exact Rat.add_zero a.val
+  add_assoc a b c := by apply Subtype.ext; exact Rat.add_assoc a.val b.val c.val
+  zero_add a := by apply Subtype.ext; exact Rat.zero_add a.val
+  add_zero a := by apply Subtype.ext; exact Rat.add_zero a.val
   nsmul := nsmulRec
   zsmul := zsmulRec
-  neg_add_cancel a := by apply Subtype.eq; exact Rat.neg_add_cancel a.val
-  add_comm a b := by apply Subtype.eq; exact Rat.add_comm a.val b.val
+  neg_add_cancel a := by apply Subtype.ext; exact Rat.neg_add_cancel a.val
+  add_comm a b := by apply Subtype.ext; exact Rat.add_comm a.val b.val
 
 /-
 (c) The set of rational numbers with denominator at most 2, where the operation is multiplication.
