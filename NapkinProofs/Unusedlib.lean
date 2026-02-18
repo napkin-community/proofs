@@ -67,19 +67,29 @@ private partial def ackermann0 (m n : ℕ) : ℕ :=
 ###### References
 - https://en.wikipedia.org/wiki/Triangular_number
 -/
-private def tri (n : ℕ) : ℕ := (n * (n + 1)) / 2
+private def tri (n : ℕ) : ℕ :=
+  match n with
+  | 0 => 0
+  | n_minus_1 + 1 => tri n_minus_1 + (n_minus_1 + 1)
+
+private def tri_fast (n : ℕ) : ℕ := (n * (n + 1)) / 2
 
 #guard (Array.range 12).map tri = #[0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66]
+#guard (Array.range 100).map tri = (Array.range 100).map tri_fast
 
-private lemma tri_succ (n : ℕ) : tri (n + 1) = tri n + n + 1 := by
-  calc
-    tri (n + 1)
-      = 2 * (tri (n + 1)) / 2             := by rw [Nat.mul_div_cancel_left _ (by decide)]
-    _ = 2 * ((n + 1) * (n + 2) / 2) / 2   := by rw [tri]
-    _ = (n + 1) * (n + 2) / 2             := by rw [Nat.mul_div_cancel_left' (Even.two_dvd (Nat.even_mul_succ_self (n + 1)))]
-    _ = (n * (n + 1) + 2 * (n + 1)) / 2   := by ring_nf
-    _ = n * (n + 1) / 2 + 2 * (n + 1) / 2 := by rw [nat_div_add_of_dvd (Even.two_dvd (Nat.even_mul_succ_self n)) (Nat.dvd_mul_right 2 _) (by decide)]
-    _ = tri n + (n + 1)                   := by rw [tri, Nat.mul_div_cancel_left _ (by decide)]
+private lemma tri_eq_tri_fast (n : ℕ) : tri n = tri_fast n := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    calc
+      tri (n + 1)
+        = tri n + (n + 1)                       := by rw [tri]
+      _ = tri_fast n + (n + 1)                  := by rw [ih]
+      _ = (n * (n + 1)) / 2 + (n + 1)           := by rw [tri_fast]
+      _ = (n * (n + 1)) / 2 + (n + 1) * 2 / 2   := by rw [Nat.mul_div_cancel (n + 1) (n:= 2) (by decide)]
+      _ = (n * (n + 1) + (n + 1) * 2) / 2       := by rw [nat_div_add_of_dvd (Even.two_dvd (Nat.even_mul_succ_self n)) (Nat.dvd_mul_left 2 _) (by decide)]
+      _ = ((n + 1) * (n + 2)) / 2               := by ring_nf
+      _ = tri_fast (n + 1)                      := by rw [tri_fast]
 
 
 /-
