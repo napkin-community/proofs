@@ -42,7 +42,7 @@ example : ℚˣ ≃* { q : ℚ // q ≠ 0 } where
   an identity element, the element 0 ∈ ℚ does not have an inverse.
 -/
 example : ¬(∀ {a : ℚ}, a * a⁻¹ = 1) := by
-  push_neg
+  push Not
   use 0
   linarith
 
@@ -50,7 +50,7 @@ example : ¬(∀ {a : ℚ}, a * a⁻¹ = 1) := by
 • The pair (Z, ·) is also NOT a group. (Why?)
 -/
 example [Group ℤ] : ¬(∀ {a : ℤ}, a * a⁻¹ = 1) := by
-  push_neg
+  push Not
   use 0
   linarith
 
@@ -231,7 +231,7 @@ instance : AddCommGroup RatDenomLE2 where
 example [Group RatDenomLE2] : ¬(∀ {a b : RatDenomLE2}, (a * b).val = a.val * b.val) := by
   intro h
   have h0 := rat_denom_le2_mul
-  push_neg at h0
+  push Not at h0
   obtain ⟨a, b, ha, hb, hab_not⟩ := h0
   let a : RatDenomLE2 := ⟨a, ha⟩
   let b : RatDenomLE2 := ⟨b, hb⟩
