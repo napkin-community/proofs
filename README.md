@@ -1,3 +1,9 @@
+> Migrated to [napkin-community.github.io](https://github.com/napkin-community/napkin-community.github.io)
+> --------
+> This repo has been migrated to <https://github.com/napkin-community/napkin-community.github.io/tree/main/lean>
+
+&nbsp;
+
 napkin-proofs
 ========
 Lean4 formal proofs of "An Infinitely Large Napkin".
